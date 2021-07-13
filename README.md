@@ -16,10 +16,10 @@
     RegionEndpoint.USEast1 // Region
   );
   ```
-  - #### For Amazon S3(simple storage service) set up, please refer to [Getting started with Amazon S3](https://docs.aws.amazon.com/AmazonS3/latest/userguide/GetStartedWithS3.html)
+  - #### For Amazon S3(simple storage service) set up, please refer to [Getting started with Amazon S3].(https://docs.aws.amazon.com/AmazonS3/latest/userguide/GetStartedWithS3.html)
   - #### Last step you should set Cognito identity pool to access Amazon S3: `Identity and Access Management Console` --> click `Roles` in the left-hand pane --> Type your identity pool name into the search box --> Two roles will be listed: one for `unauthenticated users` and one for `authenticated users` --> Click the role for unauthenticated users --> Select `AmazonS3FullAcess` --> Click `Attach Policy`. The settings shown below will give your identity pool full to access to all actions for the specified bucket.
  ![Attach S3FullAcess Policy](https://user-images.githubusercontent.com/46734495/125425143-1b9e70ac-d415-40c9-b20a-0eca960ece1f.PNG)
 
 - ### Getting Started
   - #### The release in this repo contains all the necessary AWS.SDK dependencies, including AWS SDK for .NET Standard 2.0/ and additional DLLs specifed in [AWS Unity Support](https://docs.aws.amazon.com/sdk-for-net/latest/developer-guide/unity-special.html), so just download the release and install it in your Unity Assets.
-  - 
+  - #### Input four parametes of yours in the Unity inspector window. Click `Run` and press `Space` button should upload the time stamp files generated in the application directory to the S3 bucket, and it's done.
