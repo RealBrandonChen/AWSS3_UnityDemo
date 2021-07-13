@@ -1,4 +1,4 @@
-﻿// Copyright 2014-2015 Amazon.com, 
+// Copyright 2014-2015 Amazon.com, 
 // Inc. or its affiliates. All Rights Reserved.
 // 
 // Licensed under the AWS Mobile SDK For Unity 
@@ -134,31 +134,81 @@ public class AWSDataTransfer : MonoBehaviour
 
     }
 
+    /// <summary>
+    /// Download Object from S3 Bucket using synchronous method, this may cause thread blocking if the downloaded directory is heavy. 
+    /// </summary>
+    #pragma warning disable
+    void DownloadFolder()
+    {
+        DownloadDirectory();
+    }
+#pragma warning restore
+    private async Task DownloadDirectory()
+    {
+        try
+        {
+            var directoryTransferUtility = new TransferUtility(Client);
+            var request = new TransferUtilityDownloadDirectoryRequest
+            {   BucketName = "",
+                LocalDirectory = "",
+                S3Directory = "",
+                DownloadFilesConcurrently = true,
+            };
+            
+            await directoryTransferUtility.DownloadDirectoryAsync(request);
+            Debug.Log("");
+        }
+        catch (AmazonS3Exception e)
+        {
+            Debug.LogFormat(
+                "Error encountered ***. Message:'{0}' when writing an object", e.Message);
+        }
+        catch (Exception e)
+        {
+            Debug.LogFormat(
+                 "Unknown encountered on server. Message:'{0}' when writing an object", e.Message);
+        }
+
+    }
+
+
+
+    /// <summary>
+    /// Post Object to S3 Bucket in asynchronous method. 
+    /// </summary>
+#pragma warning disable
+    void DeleteObject()
+    {
+        BucketDelete();
+    }
+#pragma warning restore
+    private async Task BucketDelete()
+    {
+        try
+        {
+            var request = new DeleteBucketRequest
+            {   BucketName = "",
+                BucketRegion = "",
+            };
+            await Client.DeleteBucketAsync(request);
+            Debug.Log("");
+        }
+        catch (AmazonS3Exception e)
+        {
+            Debug.LogFormat(
+                "Error encountered ***. Message:'{0}' when writing an object", e.Message);
+        }
+        catch (Exception e)
+        {
+            Debug.LogFormat(
+                 "Unknown encountered on server. Message:'{0}' when writing an object", e.Message);
+        }
+    }
+
     private string GetFileHelper()
     {
         string filesDirectory;
         filesDirectory = Directory.GetParent(Application.dataPath).ToString() + Path.DirectorySeparatorChar + "TimeStampFolder";
         return filesDirectory;
     }
-
-    /// <summary>
-    /// Post Object to S3 Bucket using synchronous method, this may cause thread blocking if the uploading directory is heavy. 
-    /// </summary>
-    /*
-    void PostFolder()
-    {
-        //UploadDirAsync().Wait();
-        var directoryTransferUtility = new TransferUtility(Client);
-        var request = new TransferUtilityUploadDirectoryRequest
-        {
-            BucketName = S3BucketName,
-            Directory = directoryPath,
-            SearchOption = SearchOption.AllDirectories,
-            //SearchPattern = wildCard,
-            CannedACL = S3CannedACL.Private,
-        };
-        directoryTransferUtility.UploadDirectory(request);
-        Debug.Log("All files uploaded!");
-    }
-    */
 }
