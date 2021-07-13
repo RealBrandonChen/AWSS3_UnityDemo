@@ -1,2 +1,2 @@
 # AWSS3_UnityDemo
-Implement AWSS3 files upload and download in Unity
+## Upload your local directory/mutiple files created from Unity to Amazon S3 bucket via its high-level API UtilityTransfer.
